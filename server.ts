@@ -231,6 +231,79 @@ app.get("/customer/avgCredit", async (req, res) => {
   }
 });
 
+app.get("/customer/countCustomer", async (req, res) => {
+  try {
+    const countCustomer = await prisma.customer.count();
+    res.json({ countCustomer: countCustomer });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post("/order/create", async (req, res) => {
+  try {
+    const customerId = req.body.customerId;
+    const amount = req.body.amount;
+    const order = await prisma.order.create({
+      data: {
+        customerId: customerId,
+        amount: amount,
+      },
+    });
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get("/customer/listOrder/:customerId", async (req, res) => {
+  try {
+    const customerId = req.params.customerId;
+    const orders = await prisma.order.findMany({
+      where: {
+        customerId: customerId,
+      },
+    });
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get("/customer/listAllOrder", async (req, res) => {
+  try {
+    const customers = await prisma.customer.findMany({
+      include: {
+        Orders: true,
+      },
+    });
+    res.json(customers);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get("/customer/listOrderAndProduct/:customerId", async (req, res) => {
+  try {
+    const customerId = req.params.customerId;
+    const customers = await prisma.customer.findMany({
+      where: {
+        id: customerId,
+      },
+      include: {
+        Orders: {
+          include: {
+            Product: true,
+          },
+        },
+      },
+    });
+    res.json(customers);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 // Start the server
 app.listen(port, () => {

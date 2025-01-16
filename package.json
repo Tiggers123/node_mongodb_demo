@@ -7,7 +7,6 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "@prisma/client": "^6.0.1",
     "body-parser": "^1.20.3",
@@ -20,5 +19,14 @@
     "prisma": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tiggers123/node_mongodb_demo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Tiggers123/node_mongodb_demo/issues"
+  },
+  "homepage": "https://github.com/Tiggers123/node_mongodb_demo#readme",
+  "description": ""
 }
